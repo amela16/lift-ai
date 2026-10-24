@@ -1,0 +1,28 @@
+# Temporary public HTTPS preview. Hostname rotates if this pod restarts.
+# Production: use the normal Ingress after opening TCP 80/443, or a named tunnel.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: preview-tunnel
+  namespace: lift-ai
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: preview-tunnel}
+  template:
+    metadata:
+      labels: {app: preview-tunnel}
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: tunnel
+          image: cloudflare/cloudflared:latest
+          args: [tunnel, --no-autoupdate, --protocol, http2, --url, 'http://frontend:80']
+          resources:
+            requests: {cpu: 10m, memory: 32Mi}
+            limits: {cpu: 300m, memory: 128Mi}
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: [ALL]}

@@ -1,0 +1,42 @@
+# Public HTTPS via a Cloudflare named tunnel; no inbound ports needed.
+# Public hostnames (→ http://frontend.lift-ai.svc.cluster.local:80) are configured on the
+# tunnel in the Cloudflare dashboard. The token lives in the cloudflare-tunnel secret,
+# created by scripts/deploy-remote.sh from TUNNEL_TOKEN_FILE.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudflare-tunnel
+  namespace: lift-ai
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: cloudflare-tunnel}
+  template:
+    metadata:
+      labels: {app: cloudflare-tunnel}
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: cloudflared
+          image: cloudflare/cloudflared:latest
+          args: [tunnel, --no-autoupdate, --protocol, http2, --metrics, '0.0.0.0:2000', run]
+          env:
+            - name: TUNNEL_TOKEN
+              valueFrom:
+                secretKeyRef: {name: cloudflare-tunnel, key: token}
+          readinessProbe:
+            httpGet: {path: /ready, port: 2000}
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet: {path: /ready, port: 2000}
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          resources:
+            requests: {cpu: 10m, memory: 32Mi}
+            limits: {cpu: 300m, memory: 128Mi}
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: [ALL]}
