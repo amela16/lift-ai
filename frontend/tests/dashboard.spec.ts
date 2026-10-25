@@ -59,16 +59,21 @@ test('desktop network, directory, filters, details and map',async({page})=>{
  await page.screenshot({path:'../docs/screenshots/map.png',fullPage:true});
  expect(errors).toEqual([]);
 });
-test('light mode toggle persists',async({page})=>{
- await page.emulateMedia({colorScheme:'dark'});
+test('theme follows the system by default and can be chosen manually',async({page})=>{
+ await page.emulateMedia({colorScheme:'light'});
  await page.goto('/');
+ await expect(page.locator('html')).toHaveAttribute('data-theme','light');
+ await page.emulateMedia({colorScheme:'dark'});
  await expect(page.locator('html')).toHaveAttribute('data-theme','dark');
- await page.getByRole('button',{name:'Switch to light mode'}).click();
+ await page.getByRole('button',{name:/^Theme: System/}).click();
+ await page.getByRole('menuitemradio',{name:/^Light/}).click();
  await expect(page.locator('html')).toHaveAttribute('data-theme','light');
  expect(await page.evaluate(()=>getComputedStyle(document.body).backgroundColor)).toBe('rgb(238, 241, 245)');
  await page.reload();
  await expect(page.locator('html')).toHaveAttribute('data-theme','light');
- await page.getByRole('button',{name:'Switch to dark mode'}).click();
+ await page.getByRole('button',{name:/^Theme: Light/}).click();
+ await expect(page.getByRole('menuitemradio',{name:/^Daytime/})).toBeVisible();
+ await page.getByRole('menuitemradio',{name:/^System/}).click();
  await expect(page.locator('html')).toHaveAttribute('data-theme','dark');
 });
 test('mobile navigation, layout and station interaction',async({page})=>{

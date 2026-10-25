@@ -182,6 +182,11 @@
 :root[data-theme=light] .status-badge.new{color:#49ac98;background:#7ee6cf}
 :root[data-theme=light] .status-badge.new i{background:#eff8f6}
 :root[data-theme=light] .new-foot{background:#7ee6cf;color:#49ac98}
+:root[data-theme=light] .theme-options{border:1px solid #c6d3dd;background:#f3f6f9f5;box-shadow:0 14px 36px #e6e6e699}
+:root[data-theme=light] .theme-options button{color:#24323a}
+:root[data-theme=light] .theme-options button:hover,:root[data-theme=light] .theme-options button:focus-visible{background:#fafbfc}
+:root[data-theme=light] .theme-options button[aria-checked=true]{color:#1e9a7e}
+:root[data-theme=light] .theme-options small{color:#637682}
 :root[data-theme=light]{color-scheme:light;color:#18212b;background:#eef1f5;--mint:#0f8a6c;--muted:#5d6a78;--border:#d5dce4;--panel:#ffffff}
 :root[data-theme=light] body{background:#eef1f5}
 :root[data-theme=light] .map-container .maplibregl-canvas{filter:saturate(.35) brightness(1.03)}

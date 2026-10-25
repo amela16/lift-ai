@@ -20,7 +20,7 @@
 - **Stations without elevators**: 22 stations without any elevator (e.g. Nöldnerplatz, Moritzplatz, Gneisenaustraße) are listed, mapped in amber and filterable. Lines whose platforms have no elevator at otherwise accessible stations are flagged too, e.g. S2/S25/S26 at Yorckstraße. "No elevator" comes from the BrokenLifts elevator inventory. Stations missing from it are added only when OpenStreetMap also tags them `wheelchair=no`, and "not step-free" is stated only where OSM confirms it.
 - **New outages**: elevators that went out of service within the last 2 hours get a "New" badge in the station tables and their own filter. Outages already present when monitoring began are never marked new, because their start time is unknown.
 - **Map search**: find a station on the Berlin map. The map flies to it and highlights the marker.
-- **Light and dark mode**: the ☀/☾ button in the top bar switches themes. The first visit follows the system setting, and the choice is remembered. `frontend/src/light.css` is generated from the dark stylesheet by `scripts/build-light-theme.py`; re-run it after changing `styles.css`.
+- **Light and dark mode**: the theme menu in the top bar offers System (default, follows the device and updates live), Light, Dark and Daytime (light from sunrise to sunset in Berlin). The choice is remembered and applied before the first paint. `frontend/src/light.css` is generated from the dark stylesheet by `scripts/build-light-theme.py`; re-run it after changing `styles.css`.
 - **English and German**: a DE/EN switch translates the whole UI. The backend renders briefings and copilot answers in the selected language from the same evidence, so one cached Qwen selection serves both languages.
 
 ## How the AI avoids making things up
