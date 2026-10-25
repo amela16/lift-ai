@@ -41,7 +41,7 @@ def normalize(raw):
 
 
 async def fetch_stations():
-    async with httpx.AsyncClient(timeout=35, follow_redirects=True, headers={'User-Agent': 'LIFT-AI/1.0 (Berlin accessibility portfolio; 15-minute refresh)'}) as client:
+    async with httpx.AsyncClient(timeout=35, follow_redirects=True, headers={'User-Agent': 'LIFT-AI/1.0 (Berlin elevator accessibility; 15-minute refresh)'}) as client:
         records, page, expected, timestamps = [], 1, None, []
         while page <= 100:
             response = await client.get(f'{SOURCE}/api/station/list', params={'page': page})
