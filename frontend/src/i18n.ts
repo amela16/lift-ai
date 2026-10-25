@@ -3,7 +3,7 @@ const plural=(n:number,one:string,many:string)=>`${n} ${n===1?one:many}`;
 const en={
  locale:'en-GB',
  skip:'Skip to dashboard',network:'Berlin network',observatory:'Accessibility observatory',workspace:'WORKSPACE',workspaceCrumb:'Workspace',
- nav:{Overview:'Overview',Stations:'Stations',Briefings:'Briefings'} as Record<string,string>,
+ nav:{Overview:'Overview',Stations:'Stations',Briefings:'AI'} as Record<string,string>,
  tagline:['A city that moves.','For everyone.','Open data. Fewer barriers.'],
  methodology:'Data & methodology',connectionActive:'Data connection active',awaitingData:'Awaiting fresh data',
  closeNav:'Close navigation',openNav:'Open navigation',berlin:'Berlin, DE',
@@ -63,7 +63,7 @@ export type Strings=typeof en;
 const de:Strings={
  locale:'de-DE',
  skip:'Zum Dashboard springen',network:'Berliner Netz',observatory:'Barrierefreiheits-Monitor',workspace:'ARBEITSBEREICH',workspaceCrumb:'Arbeitsbereich',
- nav:{Overview:'Übersicht',Stations:'Stationen',Briefings:'Briefings'},
+ nav:{Overview:'Übersicht',Stations:'Stationen',Briefings:'KI'},
  tagline:['Eine Stadt in Bewegung.','Für alle.','Offene Daten. Weniger Barrieren.'],
  methodology:'Daten & Methodik',connectionActive:'Datenverbindung aktiv',awaitingData:'Warte auf aktuelle Daten',
  closeNav:'Navigation schließen',openNav:'Navigation öffnen',berlin:'Berlin, DE',

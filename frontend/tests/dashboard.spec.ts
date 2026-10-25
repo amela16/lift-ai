@@ -96,7 +96,7 @@ test('AI briefing and copilot answer with linked records',async({page})=>{
  await page.setViewportSize({width:1440,height:1000});
  await page.goto('/');
  await expect(page.locator('tbody tr').first()).toBeVisible({timeout:30000});
- await page.getByRole('button',{name:/^Briefings/}).click();
+ await page.getByRole('button',{name:'AI',exact:true}).click();
  await expect(page.getByRole('heading',{name:'The accessibility briefing'})).toBeVisible();
  await expect(page.locator('.ai-report .source-chips button').first()).toBeVisible();
  const input=page.getByRole('textbox',{name:'Ask a question'});
