@@ -100,3 +100,11 @@ td.muted div+div{margin-top:3px}
 .theme-options button[aria-checked=true]{color:#7ee6cf}
 .theme-options span{flex:1;display:flex;flex-direction:column;gap:1px}
 .theme-options small{font-size:10px;color:#7d909c}
+.network-2d{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:44px 16px 56px}
+.network-2d svg{width:100%;height:100%}
+.network-2d circle{fill:#63d9c4;stroke:#0a111b;stroke-width:.08;cursor:pointer}
+.network-2d circle.outage{fill:#ffb59e}
+.network-2d circle.unknown{fill:#a99cc9}
+.network-2d circle.no-lift{fill:#f2c14e}
+.network-2d circle:hover{stroke:#fff;stroke-width:.1}
+.network-2d-note{position:absolute;left:19px;right:70px;bottom:36px;margin:0;font-size:10px;color:#8fa1ad}

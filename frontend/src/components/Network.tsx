@@ -4,10 +4,10 @@ import { useEffect, useMemo, useState } from 'react';
 import { Color, SRGBColorSpace, TextureLoader, type Texture } from 'three';
 import type { Station } from '../types';
 import lines from '../data/lines.json';
+import { planar } from '../projection';
 type Line3={ref:string;mode:string;colour:string;segments:[number,number][][]};
 const network=lines as Line3[];
-// Equirectangular projection around Alexanderplatz; z is scaled by 1/cos(52.5°) to keep true proportions.
-const project=([lon,lat]:[number,number]):[number,number,number]=>[(lon-13.4)*49,.1,-(lat-52.52)*80.6];
+const project=(c:[number,number]):[number,number,number]=>{const [x,z]=planar(c);return [x,.1,z];};
 const point=(s:Station)=>project(s.coordinates!);
 const GAP=.075;
 // Scene colours per theme; lines keep their official colours in both.

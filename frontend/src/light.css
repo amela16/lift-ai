@@ -187,6 +187,12 @@
 :root[data-theme=light] .theme-options button:hover,:root[data-theme=light] .theme-options button:focus-visible{background:#fafbfc}
 :root[data-theme=light] .theme-options button[aria-checked=true]{color:#1e9a7e}
 :root[data-theme=light] .theme-options small{color:#637682}
+:root[data-theme=light] .network-2d circle{fill:#249480;stroke:#4270b3}
+:root[data-theme=light] .network-2d circle.outage{fill:#b82c00}
+:root[data-theme=light] .network-2d circle.unknown{fill:#433663}
+:root[data-theme=light] .network-2d circle.no-lift{fill:#ab7c0d}
+:root[data-theme=light] .network-2d circle:hover{stroke:#1a1a1a}
+:root[data-theme=light] .network-2d-note{color:#526470}
 :root[data-theme=light]{color-scheme:light;color:#18212b;background:#eef1f5;--mint:#0f8a6c;--muted:#5d6a78;--border:#d5dce4;--panel:#ffffff}
 :root[data-theme=light] body{background:#eef1f5}
 :root[data-theme=light] .map-container .maplibregl-canvas{filter:saturate(.35) brightness(1.03)}
