@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import time
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone, timedelta
 from fastapi import FastAPI, HTTPException, Query
@@ -12,9 +13,13 @@ from .insights import generate_briefing, cached_briefing, answer_question, Quest
 log = logging.getLogger('uvicorn.error')
 last_error = None
 
-async def sync_loop():
-    global last_error
-    while True:
+sync_lock = asyncio.Lock()
+last_sync = 0.0
+MIN_MANUAL_INTERVAL = 30
+
+async def sync_once():
+    global last_error, last_sync
+    async with sync_lock:
         try:
             stations, updated, metadata = await fetch_network()
             await asyncio.to_thread(save_snapshot, stations, updated, metadata)
@@ -24,6 +29,11 @@ async def sync_loop():
         except Exception as exc:
             last_error = 'Source refresh failed; retaining last successful snapshot.'
             log.warning('Source sync failed: %s', exc)
+        last_sync = time.monotonic()
+
+async def sync_loop():
+    while True:
+        await sync_once()
         await asyncio.sleep(900 if last_error is None else 120)
 
 @asynccontextmanager
@@ -82,6 +92,12 @@ def dashboard():
         history = list(db.scalars(select(Snapshot).where(Snapshot.observed_at > datetime.now(timezone.utc) - timedelta(hours=24)).order_by(Snapshot.id)))
         data['history'] = [{'at': s.data['fetched_at'], 'outages': s.data['stats']['outages']} for s in history]
         return data
+
+@app.post('/api/refresh')
+async def refresh():
+    if not sync_lock.locked() and time.monotonic() - last_sync > MIN_MANUAL_INTERVAL:
+        await sync_once()
+    return {'refreshed': last_error is None}
 
 @app.get('/api/stations/{station_id}/history')
 def station_history(station_id: int):
